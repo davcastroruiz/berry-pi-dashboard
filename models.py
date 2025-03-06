@@ -1,9 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from flask import Flask
+from config import Config  # 🔹 Importamos la configuración
+from app import db
 
-db = SQLAlchemy()
+app = Flask(__name__)
+app.config.from_object(Config)  # 🔹 Cargamos la configuración desde `config.py`
+
+db.init_app(app)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    preferences = db.Column(db.JSON, nullable=True)  # Almacenar preferencias en formato JSON
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
