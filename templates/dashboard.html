@@ -6,6 +6,12 @@
     <title>Berry Pi Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+    .noticias-container {
+        max-height: 400px;  /* Ajusta la altura máxima según lo que necesites */
+        overflow-y: auto;
+    }
+</style>
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
@@ -21,7 +27,22 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Noticias de la NBA</h5>
-                        <p class="card-text">Aquí irán las noticias de tus equipos favoritos.</p>
+                        <div class="noticias-container">
+                        <div class="container mt-4">
+                            <div class="row">
+                                {% for noticia in noticias %}
+                                <div class="col-md-12">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ noticia.title }}</h5>
+                                            <a href="{{ noticia.url }}" class="btn btn-primary" target="_blank">Ver más</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -50,8 +71,8 @@
         <!-- Información adicional en el dashboard -->
         <div class="mt-4">
             <div class="alert alert-info">
-                <h4 class="alert-heading">Tu ID de usuario: {{ user.id }}</h4>
                 <p>En esta sección puedes personalizar tu tablero con tus intereses y preferencias.</p>
+                <a href="{{ url_for('select_favorites') }}">Tus equipos</a>
             </div>
         </div>
     </div>
